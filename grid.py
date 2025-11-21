@@ -53,7 +53,11 @@ if __name__ == "__main__":
         num_steps = int(sys.argv[1])
 
     grid = Grid(20,20)
-    grid.randomize(0.3)
+    grid.cells[9][10].is_alive = True
+    grid.cells[10][10].is_alive = True
+    grid.cells[11][10].is_alive = True
+    grid.cells[11][9].is_alive = True
+    grid.cells[10][8].is_alive = True
     for row in grid.cells:
         print("".join(['█' if cell.is_alive else ' ' for cell in row]))
 

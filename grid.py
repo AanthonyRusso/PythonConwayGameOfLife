@@ -60,11 +60,12 @@ if __name__ == "__main__":
     grid.cells[10][8].is_alive = True
     for row in grid.cells:
         print("".join(['█' if cell.is_alive else ' ' for cell in row]))
+    time.sleep(.5)
 
     for _ in range(num_steps):
         print("\nNext Generation:\n")
         grid.step()
         for row in grid.cells:
             print("".join(['█' if cell.is_alive else ' ' for cell in row]))
-        time.sleep(1)
+        time.sleep(.5)
     

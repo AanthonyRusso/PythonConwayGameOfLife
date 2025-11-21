@@ -5,4 +5,3 @@ class Cell:
         return f"Cell({self.is_alive})"
     def __repr__(self):
         return f"Cell({self.is_alive})"
-    

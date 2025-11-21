@@ -6,6 +6,8 @@ WINDOW_WIDTH = 800
 WINDOW_HEIGHT = 600
 
 
+# THis is from a different project, will update once it is ready
+
 def draw_body_outline(renderer, body):
     x = int(body.position.x - body.size.x * 0.5)
     y = int(body.position.y - body.size.y * 0.5)

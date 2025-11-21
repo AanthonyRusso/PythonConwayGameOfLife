@@ -10,7 +10,7 @@
 
 ## Controls
 - Space to Play/ pause
-- r to randomize cells (20% chance of the cell to be alive)
+- r to randomize cells (30% chance of the cell to be alive)
 - c to clear
 - click cell to toggle
 

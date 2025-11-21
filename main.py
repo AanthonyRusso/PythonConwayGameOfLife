@@ -1,21 +1,24 @@
 import sdl2
 import sdl2.ext
 from grid import Grid
+import sys
+
 
 WINDOW_WIDTH = 1200
 WINDOW_HEIGHT = 800
 
 
-# THis is from a different project, will update once it is ready
 TILE_SIZE = 20
 
-GRID_WIDTH = WINDOW_WIDTH // TILE_SIZE
-GRID_HEIGHT = WINDOW_HEIGHT // TILE_SIZE
+
 
 
 
 def main():
-    grid = Grid(GRID_WIDTH, GRID_HEIGHT)
+
+    grid_width = WINDOW_WIDTH // TILE_SIZE
+    grid_height = WINDOW_HEIGHT // TILE_SIZE
+    grid = Grid(grid_width, grid_height)
     grid.cells[9][10].is_alive = True
     grid.cells[10][10].is_alive = True
     grid.cells[11][10].is_alive = True
@@ -47,7 +50,7 @@ def main():
                 elif event.key.keysym.sym == sdl2.SDLK_c:
                     grid.clear()
                 elif event.key.keysym.sym == sdl2.SDLK_r:
-                    grid.randomize(.1)
+                    grid.randomize(.3)
             if event.type == sdl2.SDL_MOUSEBUTTONDOWN:
                 x, y = event.button.x // TILE_SIZE, event.button.y // TILE_SIZE
                 grid.cells[y][x].is_alive = not grid.cells[y][x].is_alive
@@ -56,8 +59,8 @@ def main():
 
         # Render
         renderer.clear()
-        for y in range(GRID_HEIGHT):
-            for x in range(GRID_WIDTH):
+        for y in range(grid_height):
+            for x in range(grid_width):
                 cell = grid.cells[y][x]
                 color = sdl2.ext.Color(255, 255, 255) if cell.is_alive else sdl2.ext.Color(0, 0, 0)
                 rect = sdl2.SDL_Rect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE)
@@ -77,4 +80,10 @@ def main():
     sdl2.ext.quit()
 
 if __name__ == "__main__":
+    if len(sys.argv) < 4:
+        print("To customize width, height, and tile size: python main.py <window_width> <window_height> <tile_size>")
+    else:
+        WINDOW_WIDTH = int(sys.argv[1])
+        WINDOW_HEIGHT = int(sys.argv[2])
+        TILE_SIZE = int(sys.argv[3])
     main()

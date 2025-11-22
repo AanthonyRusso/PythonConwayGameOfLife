@@ -24,6 +24,8 @@ def main():
     grid.cells[11][10].is_alive = True
     grid.cells[11][9].is_alive = True
     grid.cells[10][8].is_alive = True
+    for x, y in [(10, 9), (10, 10), (10, 11), (9, 11), (8, 10)]:
+        grid.add_active_cell(x, y)
     
     paused = True
 
@@ -54,6 +56,11 @@ def main():
             if event.type == sdl2.SDL_MOUSEBUTTONDOWN:
                 x, y = event.button.x // TILE_SIZE, event.button.y // TILE_SIZE
                 grid.cells[y][x].is_alive = not grid.cells[y][x].is_alive
+                if grid.cells[y][x].is_alive:
+                    grid.add_active_cell(x,y)
+                else:
+                    if (x, y) in grid.active_cells:
+                        grid.remove_active_cell(x,y)
 
 
 

@@ -68,7 +68,7 @@ class Grid:
         for x in range(self.width):
             for y in range(self.height):
                 self.cells[y][x].is_alive = False
-        self.active_cells = []
+        self.active_cells = set()
 
 if __name__ == "__main__":
 

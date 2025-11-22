@@ -6,7 +6,6 @@
 - PySDL2 render
 - Click to toggle cells
 - pause/play
-- speed control
 
 ## Controls
 - Space to Play/ pause
@@ -15,4 +14,5 @@
 - click cell to toggle
 
 ## Requirements
+
 - PySDL2

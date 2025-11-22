@@ -21,13 +21,6 @@ def main():
     UI_BAR_HEIGHT = int(WINDOW_HEIGHT * 0.1)
     FONT_SIZE = int(UI_BAR_HEIGHT * 0.3)
     grid = Grid(grid_width, grid_height)
-    grid.cells[9][10].is_alive = True
-    grid.cells[10][10].is_alive = True
-    grid.cells[11][10].is_alive = True
-    grid.cells[11][9].is_alive = True
-    grid.cells[10][8].is_alive = True
-    for x, y in [(10, 9), (10, 10), (10, 11), (9, 11), (8, 10)]:
-        grid.add_active_cell(x, y)
     
     generation = 0
     paused = True
@@ -57,7 +50,9 @@ def main():
                 elif event.key.keysym.sym == sdl2.SDLK_c:
                     grid.clear()
                     generation = 0
+                    paused = True
                 elif event.key.keysym.sym == sdl2.SDLK_r:
+                    grid.clear()
                     grid.randomize(.3)
                     generation = 0
             if event.type == sdl2.SDL_MOUSEBUTTONDOWN:
@@ -74,7 +69,10 @@ def main():
         # Render
         renderer.clear()
         for x, y in grid.active_cells:
-            renderer.fill((x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE),sdl2.ext.Color(200, 200, 200))
+            age = grid.cells[y][x].time_alive * 5
+            if age > 255:
+                age = 255
+            renderer.fill((x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE),sdl2.ext.Color(255-age, 255-age, 255))
         for x in range(grid.width + 1):
             renderer.draw_line((x * TILE_SIZE, 0, x * TILE_SIZE, WINDOW_HEIGHT),sdl2.ext.Color(40, 40, 40))
         for y in range(grid.height + 1):

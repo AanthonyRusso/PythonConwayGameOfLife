@@ -39,12 +39,18 @@ class Grid:
                 else:
                     next_state[(x, y)] = False
         for (x, y), state in next_state.items():
+            if self.cells[y][x].is_alive == True:
+                if state == True:
+                    self.cells[y][x].time_alive += 1
+                else:
+                    self.cells[y][x].time_alive = 0
             self.cells[y][x].is_alive = state
         self.active_cells = new_active_cells
     def add_active_cell(self, x, y):
         if (x,y) not in self.active_cells:
             self.active_cells.add((x,y))
     def remove_active_cell(self, x, y):
+        self.cells[y][x].time_alive = 0
         if (x,y) in self.active_cells:
             self.active_cells.discard((x,y))
     def check_neighbors(self,x,y):
@@ -59,6 +65,7 @@ class Grid:
                     neighbors.append(self.cells[dy][dx])
         return neighbors
     def randomize(self, probability=0.5):
+        self.clear()
         for x in range(self.width):
             for y in range(self.height):
                 self.cells[y][x].is_alive = random.random() < probability
@@ -68,6 +75,7 @@ class Grid:
         for x in range(self.width):
             for y in range(self.height):
                 self.cells[y][x].is_alive = False
+                self.cells[y][x].time_alive = 0
         self.active_cells = set()
 
 if __name__ == "__main__":

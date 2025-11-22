@@ -66,12 +66,8 @@ def main():
 
         # Render
         renderer.clear()
-        for y in range(grid_height):
-            for x in range(grid_width):
-                cell = grid.cells[y][x]
-                color = sdl2.ext.Color(255, 255, 255) if cell.is_alive else sdl2.ext.Color(0, 0, 0)
-                rect = sdl2.SDL_Rect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE)
-                renderer.fill(rect, color)
+        for x, y in grid.active_cells:
+            renderer.fill((x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE),sdl2.ext.Color(200, 200, 200))
         for x in range(grid.width + 1):
             renderer.draw_line((x * TILE_SIZE, 0, x * TILE_SIZE, WINDOW_HEIGHT),sdl2.ext.Color(40, 40, 40))
         for y in range(grid.height + 1):

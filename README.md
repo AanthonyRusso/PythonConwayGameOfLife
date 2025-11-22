@@ -6,6 +6,7 @@
 - PySDL2 render
 - Click to toggle cells
 - pause/play
+- Color visualization for age of cell
 
 ## Controls
 - Space to Play/ pause
@@ -16,3 +17,4 @@
 ## Requirements
 
 - PySDL2
+

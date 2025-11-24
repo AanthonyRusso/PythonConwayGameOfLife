@@ -1,4 +1,4 @@
-from cell import Cell
+from OOP.cell import Cell
 import random
 import sys
 import time
@@ -14,7 +14,7 @@ class Grid:
         next_state = {}
 
         for x, y in self.active_cells:
-            for i in range(-1, 2):
+            for i in range(-1, 2):  
                 for j in range(-1, 2):
                     dx = x + i
                     dy = y + j

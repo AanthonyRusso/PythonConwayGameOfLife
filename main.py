@@ -1,7 +1,9 @@
 import sdl2
 import sdl2.ext
 import sdl2.sdlttf
-from grid import Grid
+from OOP.grid import Grid
+from OOP.oop_render import render
+from OOP.oop_events import event_handler
 import sys
 
 
@@ -10,6 +12,7 @@ WINDOW_HEIGHT = 800
 
 
 TILE_SIZE = 20
+RANDOMIZE_PROBABILITY = 0.2
 
 
 
@@ -35,48 +38,29 @@ def main():
 
     font_manager = sdl2.ext.FontManager(font_path='VCR_OSD_MONO_1.001.ttf', size=FONT_SIZE)
 
-
-
+    renderer_obj = render(renderer, grid, font_manager,TILE_SIZE, WINDOW_HEIGHT)
+    event_handler_obj = event_handler(grid, TILE_SIZE)
 
     while running:  
 
         # Events
         for event in sdl2.ext.get_events():
-            if event.type == sdl2.SDL_QUIT:
-                running = False
-            elif event.type == sdl2.SDL_KEYDOWN:
+            event_handler_obj.handle_event(event)
+            if event.type == sdl2.SDL_KEYDOWN:
                 if event.key.keysym.sym == sdl2.SDLK_SPACE:
                     paused = not paused
-                elif event.key.keysym.sym == sdl2.SDLK_c:
-                    grid.clear()
+                elif event.key.keysym.sym == sdl2.SDLK_r:
                     generation = 0
                     paused = True
-                elif event.key.keysym.sym == sdl2.SDLK_r:
-                    grid.clear()
-                    grid.randomize(.3)
+                elif event.key.keysym.sym == sdl2.SDLK_c:
                     generation = 0
-            if event.type == sdl2.SDL_MOUSEBUTTONDOWN:
-                x, y = event.button.x // TILE_SIZE, event.button.y // TILE_SIZE
-                grid.cells[y][x].is_alive = not grid.cells[y][x].is_alive
-                if grid.cells[y][x].is_alive:
-                    grid.add_active_cell(x,y)
-                else:
-                    if (x, y) in grid.active_cells:
-                        grid.remove_active_cell(x,y)
+                    paused = True
 
 
 
         # Render
         renderer.clear()
-        for x, y in grid.active_cells:
-            age = grid.cells[y][x].time_alive * 5
-            if age > 255:
-                age = 255
-            renderer.fill((x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE),sdl2.ext.Color(255-age, 255-age, 255))
-        for x in range(grid.width + 1):
-            renderer.draw_line((x * TILE_SIZE, 0, x * TILE_SIZE, WINDOW_HEIGHT),sdl2.ext.Color(40, 40, 40))
-        for y in range(grid.height + 1):
-            renderer.draw_line((0, y * TILE_SIZE, WINDOW_WIDTH, y * TILE_SIZE),sdl2.ext.Color(40, 40, 40))
+        renderer_obj.draw_grid()
         if paused:
             text_surface = font_manager.render("Paused - Press SPACE to Resume", color = sdl2.ext.Color(255, 255, 255))
         else:
@@ -102,10 +86,12 @@ def main():
     sdl2.ext.quit()
 
 if __name__ == "__main__":
-    if len(sys.argv) < 4:
-        print("To customize width, height, and tile size: python main.py <window_width> <window_height> <tile_size>")
+    if len(sys.argv) < 5:
+        print("To customize width, height, and tile size: python main.py <window_width> <window_height> <tile_size> <randomize_probability> (.1,.2,etc)")
+        quit()
     else:
         WINDOW_WIDTH = int(sys.argv[1])
         WINDOW_HEIGHT = int(sys.argv[2])
         TILE_SIZE = int(sys.argv[3])
+        RANDOMIZE_PROBABILITY = float(sys.argv[4])
     main()

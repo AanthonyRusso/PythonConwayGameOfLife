@@ -46,6 +46,8 @@ def main():
         # Events
         for event in sdl2.ext.get_events():
             event_handler_obj.handle_event(event)
+            if event.type == sdl2.SDL_QUIT:
+                running = False
             if event.type == sdl2.SDL_KEYDOWN:
                 if event.key.keysym.sym == sdl2.SDLK_SPACE:
                     paused = not paused

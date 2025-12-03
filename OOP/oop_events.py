@@ -6,9 +6,7 @@ class event_handler:
         self.tile_size = tile_size
 
     def handle_event(self, event):
-        if event.type == sdl2.SDL_QUIT:
-            return False
-        elif event.type == sdl2.SDL_KEYDOWN:
+        if event.type == sdl2.SDL_KEYDOWN:
             if event.key.keysym.sym == sdl2.SDLK_c:
                 self.grid.clear()
             elif event.key.keysym.sym == sdl2.SDLK_r:

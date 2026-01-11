@@ -17,4 +17,6 @@
 ## Requirements
 
 - PySDL2
+- PySDL2.dll
+
 

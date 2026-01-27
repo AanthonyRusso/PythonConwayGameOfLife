@@ -19,4 +19,11 @@
 - PySDL2
 - PySDL2.dll
 
+## TO INSTALL
+- Run these 2 commands in whatever python environment you have
+- ```
+  pip install PySDL2
+  pip install PySDL2.dll
+  ```
+
 
